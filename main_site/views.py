@@ -82,23 +82,27 @@ def getBikeLatLng(request):
 
 def isLogin(request):
     if request.method == 'GET':
-        if request.session['isLogin']:
-            return HttpResponse('ok')
-        else:
+        try:
+            if request.session['isLogin']:
+                return HttpResponse('ok')
+        except:
+            print('error')
             return HttpResponse('no')
+
 
 def getPhoneId(request):
     if request.method == 'GET':
         if request.session['isLogin']:
             return HttpResponse(str(request.session['phoneId']))
         else:
-            return 'no'
+            return HttpResponse('no')
+
 
 def logOut(request):
     if request.method == 'GET':
         if request.session['isLogin']:
 
             del request.session['isLogin']
-            return 'ok'
+            return HttpResponse('ok')
         else:
-            return 'no'
+            return HttpResponse('no')
